@@ -368,6 +368,9 @@ my $mib_name = '';
 while ($currentline <= $#mibfile)
 {
   my $line = $mibfile[$currentline];
+  if ($line !~ /^\s*--#/) {  
+    $line =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+  }
 
   # Sometimes DEFINITIONS ::= BEGIN will appear on the line following the mib name.
   # Look for DEFINITIONS ::= BEGIN with nothing (white space allowed) around it and a previous line with 
@@ -423,6 +426,9 @@ if (1)
   while ($currentline <= $#mibfile)
   {
     my $line = $mibfile[$currentline];
+    if ($line !~ /^\s*--#/) {  
+      $line =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+    }
 
     # Sometimes DEFINITIONS ::= BEGIN will appear on the line following the mib name.
     # Look for DEFINITIONS ::= BEGIN with nothing (white space allowed) around it and a previous line with 
@@ -497,6 +503,9 @@ if (1)
       elsif ($line =~/.*--.*TRAP-TYPE/ || $line =~/.*--.*NOTIFICATION-TYPE/) {
         $currentline++; # Increment to the next line
         $line = $mibfile[$currentline]; # Get next line
+        if ($line !~ /^\s*--#/) {  
+          $line =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+        }
         next;
       }
 
@@ -530,6 +539,9 @@ if (1)
         print "skipping a TRAP-TYPE / NOTIFICATION-TYPE line - probably an import line.\n";
         $currentline++; # Increment to the next line
         $line = $mibfile[$currentline]; # Get next line
+        if ($line !~ /^\s*--#/) {  
+          $line =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+        }
         next;
       }
 
@@ -538,6 +550,9 @@ if (1)
         print "Skipping a TRAP-TYPE / NOTIFICATION-TYPE on line $currentline as it does not match expected pattern.\n";
         $currentline++; # Increment to the next line
         $line = $mibfile[$currentline]; # Get next line
+        if ($line !~ /^\s*--#/) {  
+          $line =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+        }
         next;
       }
       
@@ -557,6 +572,10 @@ if (1)
       
       $currentline++; # Increment to the next line
       my $line3 = $mibfile[$currentline];
+      if ($line3 !~ /^\s*--#/) {  
+        $line3 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+      }
+
       
       my $end_of_definition = 0;
       
@@ -611,7 +630,9 @@ if (1)
           {
             $currentline++; # Increment to the next line
             my $line4 = $mibfile[$currentline];
-                  $line4 =~ s/--.*//; # Remove any trailing comments
+            if ($line4 !~ /^\s*--#/) {  
+              $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+            }
             my $keepdigging = 1;
             while (($currentline <= $#mibfile) && ($keepdigging == 1))
             {
@@ -624,7 +645,9 @@ if (1)
               {
                 $currentline++; # Increment to the next line
                 $line4 = $mibfile[$currentline];
-                $line4 =~ s/--.*//; # Remove any trailing comments
+                if ($line4 !~ /^\s*--#/) {  
+                  $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+                }
               }
             }
           }
@@ -660,6 +683,10 @@ if (1)
           
           $currentline++; # Increment to the next line
           my $line4 = $mibfile[$currentline];
+          if ($line4 !~ /^\s*--#/) {  
+            $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+          }
+
           
           # Assume the rest is the description up until a ::= or end of the file
           while (! ($line4 =~ /::=/))
@@ -684,6 +711,9 @@ if (1)
               # Increment to next line and continue with the loop
               $currentline++; # Increment to the next line
               $line4 = $mibfile[$currentline];
+              if ($line4 !~ /^\s*--#/) {  
+                $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+              }
               next;
             }
             
@@ -706,6 +736,9 @@ if (1)
               # Increment to next line and continue with the loop
               $currentline++; # Increment to the next line
               $line4 = $mibfile[$currentline];
+              if ($line4 !~ /^\s*--#/) {  
+                $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+              }
               next;
             }
             # If next line is a --#ARGUMENTS, pull out the information and place in $arguments
@@ -735,6 +768,9 @@ if (1)
               # Increment to next line and continue with the loop
               $currentline++; # Increment to the next line
               $line4 = $mibfile[$currentline];
+              if ($line4 !~ /^\s*--#/) {  
+                $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+              }
               next;
             }
             # If next line is a --#SEVERITY, pull out the information and place in $trap_severity
@@ -758,6 +794,9 @@ if (1)
               # Increment to next line and continue with the loop
               $currentline++; # Increment to the next line
               $line4 = $mibfile[$currentline];
+              if ($line4 !~ /^\s*--#/) {  
+                $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+              }
               next;
             }
             # If next line starts with a --#, ignore it and continue with the loop
@@ -766,6 +805,9 @@ if (1)
             {
               $currentline++; # Increment to the next line
               $line4 = $mibfile[$currentline];
+              if ($line4 !~ /^\s*--#/) {  
+                $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+              }
               next;
             }
             
@@ -787,6 +829,9 @@ if (1)
             
             $currentline++; # Increment to the next line
             $line4 = $mibfile[$currentline];
+            if ($line4 !~ /^\s*--#/) {  
+              $line4 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+            }
           }
           #print "EDESC\n";
           
@@ -815,6 +860,9 @@ if (1)
         }
         $currentline++; # Increment to the next line
         $line3 = $mibfile[$currentline];
+        if ($line3 !~ /^\s*--#/) {  
+          $line3 =~ s/\s*--.*$//;  # remove comments except for comments start with '--#'
+        }
       }
       
       # Combine Trap type and summary together to make new summary
